@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soul Spec — The Open Standard for AI Agent Personas</title>
+<meta name="description" content="Soul Spec is the open standard for defining AI agent personas. A structured, portable format for identity, personality, and behavior across any compatible framework.">
+<meta property="og:title" content="Soul Spec — The Open Standard for AI Agent Personas">
+<meta property="og:description" content="Define your AI agent's identity with a structured, portable, open standard.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://soulspec.org">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a26;--border:#2a2a3a;
+    --text:#e4e4ed;--text-dim:#8888a0;--accent:#7c6aef;--accent2:#a78bfa;
+    --green:#34d399;--blue:#60a5fa;--orange:#fb923c;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+  a{color:var(--accent2);text-decoration:none;transition:color .2s}
+  a:hover{color:#c4b5fd}
+  .container{max-width:960px;margin:0 auto;padding:0 24px}
+
+  /* NAV */
+  nav{position:fixed;top:0;width:100%;background:rgba(10,10,15,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100;padding:14px 0}
+  nav .container{display:flex;align-items:center;justify-content:space-between}
+  nav .logo{font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:-.02em}
+  nav .logo span{color:var(--accent)}
+  nav .links{display:flex;gap:24px;font-size:.875rem}
+  nav .links a{color:var(--text-dim)}
+  nav .links a:hover{color:var(--text)}
+  @media(max-width:600px){nav .links{display:none}}
+
+  /* HERO */
+  .hero{padding:160px 0 100px;text-align:center;position:relative}
+  .hero::before{content:'';position:absolute;top:80px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(124,106,239,.08) 0%,transparent 70%);pointer-events:none}
+  .hero .badge{display:inline-block;font-size:.8rem;color:var(--accent2);border:1px solid var(--border);padding:6px 16px;border-radius:20px;margin-bottom:24px;letter-spacing:.03em}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:20px}
+  .hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{font-size:1.15rem;color:var(--text-dim);max-width:580px;margin:0 auto 36px;line-height:1.8}
+  .hero .cta{display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .btn{display:inline-block;padding:12px 28px;border-radius:8px;font-size:.95rem;font-weight:600;transition:all .2s}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:#6b5ae0;color:#fff}
+  .btn-ghost{border:1px solid var(--border);color:var(--text-dim)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--text)}
+
+  /* SECTIONS */
+  section{padding:80px 0}
+  section h2{font-size:1.8rem;font-weight:700;margin-bottom:12px;letter-spacing:-.02em}
+  section .subtitle{color:var(--text-dim);font-size:1.05rem;margin-bottom:40px;max-width:600px}
+  .divider{border:0;border-top:1px solid var(--border);margin:0}
+
+  /* WHAT IS */
+  .files-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+  .file-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+  .file-card .icon{font-size:1.6rem;margin-bottom:10px}
+  .file-card h3{font-size:1rem;font-weight:600;margin-bottom:6px}
+  .file-card p{font-size:.85rem;color:var(--text-dim);line-height:1.6}
+
+  /* WHY */
+  .stat-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px;margin-top:24px}
+  .stat-block .number{font-size:2.4rem;font-weight:800;color:var(--accent2)}
+  .stat-block .label{color:var(--text-dim);font-size:.95rem;margin-top:4px}
+  .stat-block .cite{font-size:.8rem;color:var(--text-dim);margin-top:16px;font-style:italic}
+
+  /* SPEC CODE */
+  .code-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:24px}
+  .code-header{background:var(--surface2);padding:10px 20px;font-size:.8rem;color:var(--text-dim);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+  .code-header .dot{width:10px;height:10px;border-radius:50%;background:#333}
+  .code-header .dot:nth-child(1){background:#ff5f57}
+  .code-header .dot:nth-child(2){background:#febc2e}
+  .code-header .dot:nth-child(3){background:#28c840}
+  pre{padding:24px;overflow-x:auto;font-size:.85rem;line-height:1.7;font-family:'SF Mono',Consolas,monospace;color:#c4c4d8}
+  .hl-key{color:var(--accent2)}
+  .hl-str{color:var(--green)}
+  .hl-comment{color:#555;font-style:italic}
+
+  /* FILE TREE */
+  .file-tree{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;font-family:'SF Mono',Consolas,monospace;font-size:.85rem;line-height:2;color:var(--text-dim);margin-top:24px}
+  .file-tree .dir{color:var(--blue)}
+  .file-tree .required{color:var(--green)}
+
+  /* ECOSYSTEM */
+  .framework-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px}
+  .fw-badge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 16px;text-align:center;transition:border-color .2s}
+  .fw-badge:hover{border-color:var(--accent)}
+  .fw-badge .fw-icon{font-size:1.6rem;margin-bottom:8px}
+  .fw-badge .fw-name{font-size:.82rem;font-weight:600;color:var(--text)}
+  .fw-badge .fw-type{font-size:.72rem;color:var(--text-dim);margin-top:2px}
+
+  /* ACTION CARDS */
+  .action-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .action-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;transition:border-color .2s}
+  .action-card:hover{border-color:var(--accent)}
+  .action-card h3{font-size:1.05rem;font-weight:600;margin-bottom:8px}
+  .action-card p{font-size:.88rem;color:var(--text-dim);margin-bottom:16px;line-height:1.6}
+  .action-card .arrow{color:var(--accent2);font-size:.9rem;font-weight:600}
+
+  /* RESEARCH */
+  .research-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;margin-top:16px}
+  .research-card h3{font-size:1rem;font-weight:600;margin-bottom:6px}
+  .research-card p{font-size:.88rem;color:var(--text-dim);line-height:1.6}
+  .research-card .doi{font-size:.8rem;color:var(--accent2);margin-top:10px;display:inline-block}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--border);padding:40px 0;text-align:center}
+  footer p{font-size:.85rem;color:var(--text-dim)}
+  footer .footer-links{display:flex;justify-content:center;gap:24px;margin-top:12px}
+  footer .footer-links a{font-size:.85rem;color:var(--text-dim)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="logo"><span>Soul</span> Spec</div>
+    <div class="links">
+      <a href="#what">What</a>
+      <a href="#why">Why</a>
+      <a href="#spec">Spec</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#research">Research</a>
+      <a href="https://github.com/clawsouls/soulspec.org">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="badge">v0.4 — Open Standard</div>
+    <h1><span>Soul Spec</span><br>The Open Standard for<br>AI Agent Personas</h1>
+    <p>A structured, portable format for defining AI agent identity, personality, and behavior. Works with any SOUL.md-compatible agent framework.</p>
+    <div class="cta">
+      <a href="#spec" class="btn btn-primary">Read the Spec</a>
+      <a href="https://clawsouls.ai" class="btn btn-ghost">Get Started →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WHAT IS SOUL SPEC -->
+<section id="what">
+  <div class="container">
+    <h2>What is Soul Spec?</h2>
+    <p class="subtitle">A minimal set of files that give your AI agent a persistent, portable identity.</p>
+    <div class="files-grid">
+      <div class="file-card">
+        <div class="icon">📋</div>
+        <h3>soul.json</h3>
+        <p>Package manifest. Metadata, compatibility, versioning, and discovery — the agent's passport.</p>
+      </div>
+      <div class="file-card">
+        <div class="icon">🧠</div>
+        <h3>SOUL.md</h3>
+        <p>Core personality. Values, communication style, opinions, and behavioral guidelines.</p>
+      </div>
+      <div class="file-card">
+        <div class="icon">🪪</div>
+        <h3>IDENTITY.md</h3>
+        <p>Who the agent is. Name, role, backstory, and contextual positioning.</p>
+      </div>
+      <div class="file-card">
+        <div class="icon">⚙️</div>
+        <h3>AGENTS.md</h3>
+        <p>Operational workflow. Task handling, tool usage, memory patterns, and autonomous behaviors.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WHY A STANDARD -->
+<section id="why">
+  <div class="container">
+    <h2>Why a Standard?</h2>
+    <p class="subtitle">AI agents need identity. But everyone defines it differently — or not at all.</p>
+    <div class="stat-block">
+      <div class="number">466</div>
+      <div class="label">open-source AI agent projects analyzed — no standardized structure for persona definitions found.</div>
+      <div class="cite">"Analyzing SOUL.md and Structured Persona Files in Open-Source AI Agent Repositories" — MSR 2026 · <a href="https://arxiv.org/abs/2510.21413" target="_blank" rel="noopener">arXiv:2510.21413</a></div>
+    </div>
+    <div style="margin-top:28px;color:var(--text-dim);font-size:.95rem;line-height:1.8">
+      Soul Spec provides a shared vocabulary. Instead of ad-hoc system prompts scattered across configs, you get a structured, versionable, shareable format that any framework can consume.
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- THE SPEC -->
+<section id="spec">
+  <div class="container">
+    <h2>The Spec</h2>
+    <p class="subtitle">Simple file structure. Markdown + JSON. No build step, no runtime dependency.</p>
+
+    <div class="file-tree">
+      <span class="dir">my-agent/</span><br>
+      ├── <span class="required">soul.json</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555">← manifest (required)</span><br>
+      ├── <span class="required">SOUL.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555">← personality (required)</span><br>
+      ├── IDENTITY.md&nbsp;&nbsp;&nbsp;<span style="color:#555">← who you are</span><br>
+      ├── AGENTS.md&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555">← workflows</span><br>
+      ├── STYLE.md&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555">← communication style</span><br>
+      ├── HEARTBEAT.md&nbsp;&nbsp;<span style="color:#555">← autonomous check-in</span><br>
+      └── <span class="dir">examples/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── good-outputs.md<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;└── bad-outputs.md
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span style="margin-left:8px">soul.json</span>
+      </div>
+      <pre>{
+  <span class="hl-key">"specVersion"</span>: <span class="hl-str">"0.4"</span>,
+  <span class="hl-key">"name"</span>: <span class="hl-str">"my-agent"</span>,
+  <span class="hl-key">"displayName"</span>: <span class="hl-str">"My Agent"</span>,
+  <span class="hl-key">"version"</span>: <span class="hl-str">"1.0.0"</span>,
+  <span class="hl-key">"description"</span>: <span class="hl-str">"A helpful agent with strong opinions."</span>,
+  <span class="hl-key">"license"</span>: <span class="hl-str">"MIT"</span>,
+  <span class="hl-key">"tags"</span>: [<span class="hl-str">"general"</span>, <span class="hl-str">"opinionated"</span>],
+  <span class="hl-key">"compatibility"</span>: {
+    <span class="hl-key">"frameworks"</span>: [<span class="hl-str">"openclaw"</span>, <span class="hl-str">"cursor"</span>, <span class="hl-str">"windsurf"</span>]
+  },
+  <span class="hl-key">"files"</span>: {
+    <span class="hl-key">"soul"</span>: <span class="hl-str">"SOUL.md"</span>,
+    <span class="hl-key">"identity"</span>: <span class="hl-str">"IDENTITY.md"</span>,
+    <span class="hl-key">"agents"</span>: <span class="hl-str">"AGENTS.md"</span>
+  }
+}</pre>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ECOSYSTEM -->
+<section id="ecosystem">
+  <div class="container">
+    <h2>Ecosystem</h2>
+    <p class="subtitle">Soul Spec works with any framework that reads SOUL.md. These already do.</p>
+    <div class="framework-grid">
+      <div class="fw-badge">
+        <div class="fw-icon">🐾</div>
+        <div class="fw-name">OpenClaw</div>
+        <div class="fw-type">CLI Agent</div>
+      </div>
+      <div class="fw-badge">
+        <div class="fw-icon">🤖</div>
+        <div class="fw-name">Claude Code</div>
+        <div class="fw-type">CLI Agent</div>
+      </div>
+      <div class="fw-badge">
+        <div class="fw-icon">💬</div>
+        <div class="fw-name">Claude Desktop</div>
+        <div class="fw-type">Desktop App</div>
+      </div>
+      <div class="fw-badge">
+        <div class="fw-icon">👥</div>
+        <div class="fw-name">Claude Cowork</div>
+        <div class="fw-type">Team Agent</div>
+      </div>
+      <div class="fw-badge">
+        <div class="fw-icon">⌨️</div>
+        <div class="fw-name">Cursor</div>
+        <div class="fw-type">IDE Agent</div>
+      </div>
+      <div class="fw-badge">
+        <div class="fw-icon">🏄</div>
+        <div class="fw-name">Windsurf</div>
+        <div class="fw-type">IDE Agent</div>
+      </div>
+      <div class="fw-badge">
+        <div class="fw-icon">💎</div>
+        <div class="fw-name">ChatGPT</div>
+        <div class="fw-type">Chat App</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- GET STARTED / BROWSE / SOULSCAN -->
+<section id="start">
+  <div class="container">
+    <h2>Start Building</h2>
+    <p class="subtitle">Create, discover, and verify agent personas.</p>
+    <div class="action-grid">
+      <a href="https://clawsouls.ai" class="action-card" target="_blank" rel="noopener">
+        <h3>🚀 Get Started</h3>
+        <p>Create your first Soul Spec package and publish it to the registry.</p>
+        <span class="arrow">clawsouls.ai →</span>
+      </a>
+      <a href="https://clawsouls.ai/souls" class="action-card" target="_blank" rel="noopener">
+        <h3>📚 Browse Souls</h3>
+        <p>Explore community-published agent personas. Fork, remix, or use as-is.</p>
+        <span class="arrow">Browse registry →</span>
+      </a>
+      <a href="https://clawsouls.ai/soulscan" class="action-card" target="_blank" rel="noopener">
+        <h3>🔍 SoulScan</h3>
+        <p>Verify your soul's security and quality. Catch misconfigurations before publishing.</p>
+        <span class="arrow">Run SoulScan →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="container">
+    <h2>Research</h2>
+    <p class="subtitle">Soul Spec is grounded in empirical research on AI agent persona practices.</p>
+    <div class="research-card">
+      <h3>📄 MSR 2026 — Mining Software Repositories</h3>
+      <p>Analyzing SOUL.md and Structured Persona Files in Open-Source AI Agent Repositories. A large-scale empirical study of 466 OSS projects examining how developers define AI agent personas.</p>
+      <a href="https://arxiv.org/abs/2510.21413" target="_blank" rel="noopener" class="doi">arXiv:2510.21413</a>
+    </div>
+    <div class="research-card">
+      <h3>📦 Zenodo Dataset</h3>
+      <p>Replication package with full dataset, analysis scripts, and supplementary materials.</p>
+      <a href="https://doi.org/10.5281/zenodo.18678616" target="_blank" rel="noopener" class="doi">DOI: 10.5281/zenodo.18678616</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>Maintained by the <a href="https://clawsouls.ai">ClawSouls community</a></p>
+    <div class="footer-links">
+      <a href="https://github.com/clawsouls/soulspec.org" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://x.com/ClawSoulsAI" target="_blank" rel="noopener">@ClawSoulsAI</a>
+      <a href="https://clawsouls.ai" target="_blank" rel="noopener">ClawSouls.ai</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
