@@ -36,7 +36,7 @@ my-soul/
 - **Browse Souls**: [clawsouls.ai/souls](https://clawsouls.ai/souls)
 - **SoulScan**: [clawsouls.ai/soulscan](https://clawsouls.ai/soulscan)
 - **Blog**: [blog.clawsouls.ai](https://blog.clawsouls.ai)
-- **Research**: [DOI: 10.5281/zenodo.18678616](https://doi.org/10.5281/zenodo.18678616)
+- **Research**: [DOI: 10.5281/zenodo.18758910](https://doi.org/10.5281/zenodo.18758910)
 
 ## Hosting
 
