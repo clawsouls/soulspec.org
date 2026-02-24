@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soul Spec for Robotics — Define Your Robot's Personality</title>
+<meta name="description" content="Soul Spec v0.5 extends to embodied agents — robots, IoT devices, and physical AI systems. Define personality, safety rules, and interaction modes in one portable package.">
+<meta property="og:title" content="Soul Spec for Robotics — Define Your Robot's Personality">
+<meta property="og:description" content="The first open standard for robot personality. From chatbots to embodied agents — define once, embody anywhere.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://soulspec.org/robotics">
+<meta property="og:image" content="https://soulspec.org/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Soul Spec for Robotics">
+<meta name="twitter:description" content="The first open standard for robot personality definition.">
+<meta name="twitter:site" content="@ClawSoulsAI">
+<link rel="canonical" href="https://soulspec.org/robotics">
+<meta name="robots" content="index, follow">
+<meta name="keywords" content="robot personality, ROS2 persona, embodied AI, robot LLM, soul spec robotics, HRI, social robot, robot identity, robot character">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0a0a0a;color:#e0e0e0;line-height:1.7}
+a{color:#7c6cff;text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1.5rem}
+header{text-align:center;padding:4rem 0 2rem}
+h1{font-size:2.4rem;color:#fff;margin-bottom:0.5rem}
+.subtitle{font-size:1.15rem;color:#999;margin-bottom:2rem}
+.tagline{font-size:1.3rem;color:#7c6cff;font-style:italic;margin-bottom:3rem}
+h2{font-size:1.5rem;color:#fff;margin:2.5rem 0 1rem;border-bottom:1px solid #333;padding-bottom:0.5rem}
+h3{font-size:1.15rem;color:#ccc;margin:1.5rem 0 0.5rem}
+p{margin-bottom:1rem;color:#bbb}
+code{background:#1a1a2e;padding:0.2rem 0.5rem;border-radius:4px;font-size:0.9rem;color:#7c6cff}
+pre{background:#1a1a2e;padding:1.5rem;border-radius:8px;overflow-x:auto;margin:1rem 0;border:1px solid #333}
+pre code{background:none;padding:0;color:#ddd}
+table{width:100%;border-collapse:collapse;margin:1rem 0}
+th,td{padding:0.6rem 0.8rem;text-align:left;border-bottom:1px solid #222}
+th{color:#999;font-weight:600;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.05em}
+td{color:#bbb}
+.highlight{color:#7c6cff}
+.badge{display:inline-block;background:#7c6cff22;color:#7c6cff;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.8rem;margin-right:0.5rem}
+.cta{display:inline-block;background:#7c6cff;color:#fff;padding:0.8rem 2rem;border-radius:6px;font-weight:600;margin:1rem 0.5rem;text-decoration:none}
+.cta:hover{background:#6b5ce7;text-decoration:none}
+.cta-secondary{background:transparent;border:1px solid #7c6cff;color:#7c6cff}
+.cta-secondary:hover{background:#7c6cff22}
+.paper{background:#111;border:1px solid #222;border-radius:8px;padding:1rem 1.2rem;margin:0.8rem 0}
+.paper-title{color:#fff;font-weight:600}
+.paper-source{color:#666;font-size:0.85rem}
+footer{text-align:center;padding:3rem 0;color:#666;font-size:0.85rem;border-top:1px solid #222;margin-top:3rem}
+nav{text-align:center;padding:1rem 0;border-bottom:1px solid #222}
+nav a{margin:0 1rem;color:#999;font-size:0.9rem}
+nav a:hover{color:#fff}
+</style>
+</head>
+<body>
+
+<nav>
+<a href="/">Soul Spec</a>
+<a href="/robotics" style="color:#7c6cff">Robotics</a>
+<a href="https://clawsouls.ai/spec">Full Spec</a>
+<a href="https://clawsouls.ai">ClawSouls</a>
+</nav>
+
+<div class="container">
+
+<header>
+<span class="badge">NEW in v0.5</span>
+<h1>Soul Spec for Robotics</h1>
+<p class="subtitle">The first open standard for robot personality definition</p>
+<p class="tagline">"Define once, embody anywhere"</p>
+</header>
+
+<h2>The Problem</h2>
+<p>Robots powered by LLMs need consistent personalities. Research proves it — <strong>robots with well-defined personas perform better and create better user experiences</strong>. But every team defines personality differently. There's no standard.</p>
+<p>Soul Spec v0.5 changes this. The same format that defines a chatbot's identity now defines a robot's personality — with fields for hardware constraints, physical safety, and interaction modes.</p>
+
+<h2>How It Works</h2>
+<p>A robot soul is the same <code>soul.json</code> + <code>SOUL.md</code> package, with optional embodied fields:</p>
+
+<pre><code>{
+  "specVersion": "0.5",
+  "name": "care-companion",
+  "displayName": "Care Companion",
+  "description": "Gentle elderly care companion with patience and warmth.",
+  "environment": "embodied",
+  "interactionMode": "voice",
+  "hardwareConstraints": {
+    "hasDisplay": true,
+    "hasSpeaker": true,
+    "hasMicrophone": true,
+    "mobility": "mobile",
+    "manipulator": false
+  },
+  "safety": {
+    "physical": {
+      "contactPolicy": "gentle-contact",
+      "emergencyProtocol": "alert_operator",
+      "operatingZone": "indoor",
+      "maxSpeed": "0.3m/s"
+    }
+  },
+  "compatibility": {
+    "frameworks": ["ros2", "openclaw"]
+  }
+}</code></pre>
+
+<p><strong>100% backward compatible.</strong> All new fields are optional. Existing chatbot souls work without changes.</p>
+
+<h2>New Fields in v0.5</h2>
+
+<table>
+<thead><tr><th>Field</th><th>Purpose</th><th>Values</th></tr></thead>
+<tbody>
+<tr><td><code>environment</code></td><td>Deployment context</td><td><code>virtual</code>, <code>embodied</code>, <code>hybrid</code></td></tr>
+<tr><td><code>interactionMode</code></td><td>Primary modality</td><td><code>text</code>, <code>voice</code>, <code>multimodal</code>, <code>gesture</code></td></tr>
+<tr><td><code>hardwareConstraints</code></td><td>Physical capabilities</td><td>Display, speaker, camera, mobility, manipulator</td></tr>
+<tr><td><code>safety.physical</code></td><td>Physical safety rules</td><td>Contact policy, emergency protocol, zone, speed</td></tr>
+</tbody>
+</table>
+
+<h2>Supported Platforms</h2>
+<p>Soul Spec works with any framework that reads <code>SOUL.md</code>. For robotics, v0.5 adds platform identifiers:</p>
+
+<table>
+<thead><tr><th>Platform</th><th>Identifier</th><th>Use Case</th></tr></thead>
+<tbody>
+<tr><td>ROS 2</td><td><code>ros2</code></td><td>General-purpose robotics</td></tr>
+<tr><td>NVIDIA Isaac</td><td><code>isaac</code></td><td>Simulation + deployment</td></tr>
+<tr><td>Webots</td><td><code>webots</code></td><td>Research simulation</td></tr>
+<tr><td>Gazebo</td><td><code>gazebo</code></td><td>Multi-robot simulation</td></tr>
+<tr><td>OpenClaw</td><td><code>openclaw</code></td><td>AI assistant framework</td></tr>
+</tbody>
+</table>
+
+<h2>Why This Matters</h2>
+
+<h3>One Soul, Any Body</h3>
+<p>The same persona definition works across chatbots, mobile apps, and robots. Transfer a customer service personality from a chat widget to a physical kiosk — no rewrite needed.</p>
+
+<h3>Physical Safety as Spec</h3>
+<p>Embodied agents introduce physical risks that virtual agents don't have. Soul Spec makes safety declarations explicit and machine-readable. <a href="https://clawsouls.ai/soulscan">SoulScan</a> validates that embodied souls include required safety fields.</p>
+
+<h3>Marketplace for Robot Characters</h3>
+<p>Research already proposes robot character marketplaces (Frontiers in Robotics, 2025). Soul Spec + <a href="https://clawsouls.ai">ClawSouls</a> makes this real — browse, download, and deploy verified robot personas.</p>
+
+<h2>Research Foundation</h2>
+<p>This extension is grounded in peer-reviewed research:</p>
+
+<div class="paper">
+<p class="paper-title">LLM-based Robot Personality Simulation and Cognitive System</p>
+<p class="paper-source">Nature Scientific Reports, 2025 — Robot personality enhances conversational dynamics and UX</p>
+</div>
+
+<div class="paper">
+<p class="paper-title">Robots with Attitudes: Influence of LLM-Driven Robot Personalities on Motivation and Performance</p>
+<p class="paper-source">arXiv 2512.06910, 2025 — Consistent personality improves task performance</p>
+</div>
+
+<div class="paper">
+<p class="paper-title">Making Social Robots Adaptable by a Marketplace for Interaction Characters</p>
+<p class="paper-source">Frontiers in Robotics and AI, 2025 — Robot character marketplace concept</p>
+</div>
+
+<div class="paper">
+<p class="paper-title">ROS-LLM: A ROS Framework for Embodied AI with Task Feedback</p>
+<p class="paper-source">arXiv 2406.19741, 2024 — Context engineering is core to ROS + LLM integration</p>
+</div>
+
+<h2>Get Started</h2>
+<p>Soul Spec v0.5 is open and free. Start defining your robot's personality today.</p>
+
+<a href="https://clawsouls.ai/spec" class="cta">Read the Full Spec</a>
+<a href="https://clawsouls.ai/souls" class="cta cta-secondary">Browse Souls</a>
+
+</div>
+
+<footer>
+<p>Soul Spec is an open standard maintained by <a href="https://clawsouls.ai">ClawSouls</a>.</p>
+<p>Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+<p style="margin-top:0.5rem">DOI: <a href="https://doi.org/10.5281/zenodo.18678616">10.5281/zenodo.18678616</a></p>
+</footer>
+
+</body>
+</html>
