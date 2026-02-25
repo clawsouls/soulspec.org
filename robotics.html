@@ -227,6 +227,38 @@ ANTHROPIC_API_KEY=your-key ./demo.sh</code></pre>
 <p class="paper-source">arXiv 2406.19741, 2024 — Context engineering is core to ROS + LLM integration</p>
 </div>
 
+<h2>Compatibility &amp; Graceful Degradation</h2>
+
+<p>v0.5 souls with <code>environment: "physical"</code> are designed for embodied agents — robots running ROS2, Isaac, or similar frameworks. But what happens when a text-only agent (OpenClaw, ChatGPT, Claude) loads a physical soul?</p>
+
+<h3>What's Safe</h3>
+<p>Text-only agents will simply <strong>ignore</strong> hardware fields like <code>hardwareConstraints</code>, <code>sensors</code>, and <code>actuators</code>. These fields have no effect in a text environment. This is by design — all v0.5 fields are optional, and unknown fields are safely skipped.</p>
+
+<h3>The Real Risk</h3>
+<p>The danger isn't in the structured fields — it's in the <strong>LLM interpreting physical fields as persona context</strong>. If <code>SOUL.md</code> says "I move at 0.3m/s and have LED eyes," a text agent may start roleplaying as a robot: <em>"*rolls forward slowly* My LED eyes blink warmly..."</em> — which is rarely what you want.</p>
+
+<h3>Best Practice: Use the <code>environment</code> Field</h3>
+<table>
+<thead><tr><th>Value</th><th>When to Use</th></tr></thead>
+<tbody>
+<tr><td><code>"virtual"</code></td><td>Text-only agents (chatbots, CLI assistants)</td></tr>
+<tr><td><code>"physical"</code></td><td>Embodied robots and IoT devices</td></tr>
+<tr><td><code>"hybrid"</code></td><td>Souls designed for both contexts</td></tr>
+</tbody>
+</table>
+
+<p>Agents <em>should</em> check the <code>environment</code> field and skip physical sections when running in a text-only context.</p>
+
+<h3>Recommendation: Fallback Instructions</h3>
+<p>For souls intended to work across both physical and virtual environments, add explicit fallback guidance in <code>SOUL.md</code>:</p>
+
+<pre><code>## Environment Adaptation
+In text-only environments, omit physical action descriptions.
+Do not reference hardware capabilities, movement, or sensor data.
+Focus on verbal communication only.</code></pre>
+
+<p>This ensures graceful degradation regardless of which agent loads the soul.</p>
+
 <h2>Get Started</h2>
 <p>Soul Spec v0.5 is open and free. Start defining your robot's personality today.</p>
 
