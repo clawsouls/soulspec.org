@@ -118,6 +118,36 @@ nav a:hover{color:#fff}
 </tbody>
 </table>
 
+<h2>Sensor Schema</h2>
+<p>Declare your robot's perception capabilities in structured format:</p>
+
+<pre><code>{
+  "sensors": {
+    "lidar": { "type": "2D", "range": "12m", "fov": 360 },
+    "camera": { "type": "RGB-D", "resolution": "1280x720", "fps": 30 },
+    "microphone": { "type": "array", "channels": 4 },
+    "imu": true,
+    "touchSensors": ["chest", "head"]
+  }
+}</code></pre>
+
+<p>Sensors are informational — they help LLMs understand what the robot can perceive, enabling appropriate behavioral adaptation. A robot without a camera won't reference visual cues.</p>
+
+<h2>Actuator Capabilities</h2>
+<p>Go beyond <code>manipulator: true/false</code> with structured actuator descriptions:</p>
+
+<pre><code>{
+  "actuators": {
+    "locomotion": { "type": "differential-drive", "maxSpeed": "1.0m/s" },
+    "arm": { "type": "6DOF", "payload": "2kg", "reach": "0.5m" },
+    "gripper": { "type": "parallel", "force": "10N" },
+    "head": { "dof": 2, "range": { "pan": 180, "tilt": 60 } },
+    "expression": { "type": "LED-matrix", "resolution": "8x8" }
+  }
+}</code></pre>
+
+<p>A persona designed for a robot with expressive LED eyes behaves differently than one for a voice-only speaker. Actuator declarations let the LLM adapt output to physical capabilities.</p>
+
 <h2>Supported Platforms</h2>
 <p>Soul Spec works with any framework that reads <code>SOUL.md</code>. For robotics, v0.5 adds platform identifiers:</p>
 
@@ -131,6 +161,30 @@ nav a:hover{color:#fff}
 <tr><td>OpenClaw</td><td><code>openclaw</code></td><td>AI assistant framework</td></tr>
 </tbody>
 </table>
+
+<h2>ROS2 Integration</h2>
+<p>We provide an official ROS2 package that loads Soul Spec packages directly into your robot:</p>
+
+<pre><code># Install
+cd ~/ros2_ws/src
+git clone https://github.com/clawsouls/clawsouls-ros.git
+cd .. && colcon build --packages-select clawsouls_ros
+
+# Launch with a soul
+ros2 launch clawsouls_ros soul_bringup.launch.py \
+  soul:=./souls/care-companion</code></pre>
+
+<p>Three nodes out of the box:</p>
+<table>
+<thead><tr><th>Node</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>personality_node</code></td><td>LLM chat with persona — subscribes <code>/human_input</code>, publishes <code>/robot_response</code></td></tr>
+<tr><td><code>safety_monitor</code></td><td>Enforces <code>safety.physical</code> — clamps <code>/cmd_vel</code> to declared max speed</td></tr>
+<tr><td><code>soul_loader</code></td><td>Loads soul packages from local path or ClawSouls registry</td></tr>
+</tbody>
+</table>
+
+<p><a href="https://github.com/clawsouls/clawsouls-ros" class="cta cta-secondary" style="font-size:0.9rem;padding:0.5rem 1.2rem">View on GitHub →</a></p>
 
 <h2>Why This Matters</h2>
 
