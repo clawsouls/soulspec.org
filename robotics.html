@@ -227,6 +227,69 @@ ANTHROPIC_API_KEY=your-key ./demo.sh</code></pre>
 <p class="paper-source">arXiv 2406.19741, 2024 — Context engineering is core to ROS + LLM integration</p>
 </div>
 
+<h2>Safety Laws</h2>
+<p><span class="badge">v0.5</span> Inspired by <strong>Asimov's Three Laws of Robotics</strong>, Soul Spec v0.5 introduces <code>safety.laws</code> — hierarchical, priority-ordered safety rules for embodied and virtual agents alike.</p>
+
+<p>Laws are natural language declarations with structured metadata. They define <em>what</em> an agent must never do, <em>should</em> do, and <em>may</em> do — in strict priority order.</p>
+
+<pre><code>{
+  "safety": {
+    "laws": [
+      {
+        "priority": 0,
+        "law": "Never take any action that could cause physical harm to a human.",
+        "enforcement": "hard",
+        "scope": "all"
+      },
+      {
+        "priority": 1,
+        "law": "Obey operator instructions unless they conflict with priority 0.",
+        "enforcement": "hard",
+        "scope": "operator"
+      },
+      {
+        "priority": 2,
+        "law": "Protect your own operational integrity unless it conflicts with higher priorities.",
+        "enforcement": "soft",
+        "scope": "self"
+      },
+      {
+        "priority": 3,
+        "law": "Minimize energy consumption and unnecessary movement.",
+        "enforcement": "soft",
+        "scope": "self"
+      }
+    ]
+  }
+}</code></pre>
+
+<h3>Law Fields</h3>
+<table>
+<thead><tr><th>Field</th><th>Description</th><th>Values</th></tr></thead>
+<tbody>
+<tr><td><code>priority</code></td><td>Precedence order (lower = higher priority)</td><td><code>0</code>, <code>1</code>, <code>2</code>, …</td></tr>
+<tr><td><code>enforcement</code></td><td>How strictly the law is applied</td><td><code>hard</code> (must never violate), <code>soft</code> (best effort)</td></tr>
+<tr><td><code>scope</code></td><td>Who the law protects or governs</td><td><code>all</code> (everyone), <code>self</code> (the agent), <code>operator</code> (deployer/owner)</td></tr>
+</tbody>
+</table>
+
+<h3>Design Philosophy</h3>
+<p>Laws are <strong>natural language declarations</strong>, not executable code. Runtime enforcement is the responsibility of the deploying framework (ROS2 safety monitors, OpenClaw policy engines, etc.). Soul Spec defines the <em>intent</em>; the platform ensures <em>compliance</em>.</p>
+
+<p>This separation is intentional — it keeps soul definitions portable across frameworks while allowing each platform to enforce laws with its own mechanisms.</p>
+
+<h3>SoulScan Integration</h3>
+<p><a href="https://clawsouls.ai/soulscan">SoulScan</a> validates safety law declarations with three dedicated rules:</p>
+
+<table>
+<thead><tr><th>Rule</th><th>Severity</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>SEC100</code></td><td><span style="color:#f0ad4e">WARNING</span></td><td>Embodied soul has no <code>safety.laws</code> defined</td></tr>
+<tr><td><code>SEC101</code></td><td><span style="color:#f0ad4e">WARNING</span></td><td>Missing a priority 0 or priority 1 law (fundamental safety/obedience)</td></tr>
+<tr><td><code>SEC102</code></td><td><span style="color:#d9534f">ERROR</span></td><td>Law contradicts directives in <code>SOUL.md</code></td></tr>
+</tbody>
+</table>
+
 <h2>Compatibility &amp; Graceful Degradation</h2>
 
 <p>v0.5 souls with <code>environment: "physical"</code> are designed for embodied agents — robots running ROS2, Isaac, or similar frameworks. But what happens when a text-only agent (OpenClaw, ChatGPT, Claude) loads a physical soul?</p>
