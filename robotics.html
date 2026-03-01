@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Soul Spec for Robotics — Define Your Robot's Personality</title>
-<meta name="description" content="Soul Spec v0.5 extends to embodied agents — robots, IoT devices, and physical AI systems. Define personality, safety rules, and interaction modes in one portable package.">
-<meta property="og:title" content="Soul Spec for Robotics — Define Your Robot's Personality">
+<title>SoulSpec for Robotics — Define Your Robot's Personality</title>
+<meta name="description" content="SoulSpec v0.5 extends to embodied agents — robots, IoT devices, and physical AI systems. Define personality, safety rules, and interaction modes in one portable package.">
+<meta property="og:title" content="SoulSpec for Robotics — Define Your Robot's Personality">
 <meta property="og:description" content="The first open standard for robot personality. From chatbots to embodied agents — define once, embody anywhere.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://soulspec.org/robotics">
 <meta property="og:image" content="https://soulspec.org/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Soul Spec for Robotics">
+<meta name="twitter:title" content="SoulSpec for Robotics">
 <meta name="twitter:description" content="The first open standard for robot personality definition.">
 <meta name="twitter:site" content="@ClawSoulsAI">
 <link rel="canonical" href="https://soulspec.org/robotics">
@@ -55,7 +55,7 @@ nav a:hover{color:#fff}
 <body>
 
 <nav>
-<a href="/">Soul Spec</a>
+<a href="/">SoulSpec</a>
 <a href="/robotics" style="color:#7c6cff">Robotics</a>
 <a href="https://clawsouls.ai/spec">Full Spec</a>
 <a href="https://clawsouls.ai">ClawSouls</a>
@@ -65,14 +65,14 @@ nav a:hover{color:#fff}
 
 <header>
 <span class="badge">NEW in v0.5</span>
-<h1>Soul Spec for Robotics</h1>
+<h1>SoulSpec for Robotics</h1>
 <p class="subtitle">The first open standard for robot personality definition</p>
 <p class="tagline">"Define once, embody anywhere"</p>
 </header>
 
 <h2>The Problem</h2>
 <p>Robots powered by LLMs need consistent personalities. Research proves it — <strong>robots with well-defined personas perform better and create better user experiences</strong>. But every team defines personality differently. There's no standard.</p>
-<p>Soul Spec v0.5 changes this. The same format that defines a chatbot's identity now defines a robot's personality — with fields for hardware constraints, physical safety, and interaction modes.</p>
+<p>SoulSpec v0.5 changes this. The same format that defines a chatbot's identity now defines a robot's personality — with fields for hardware constraints, physical safety, and interaction modes.</p>
 
 <h2>How It Works</h2>
 <p>A robot soul is the same <code>soul.json</code> + <code>SOUL.md</code> package, with optional embodied fields:</p>
@@ -149,7 +149,7 @@ nav a:hover{color:#fff}
 <p>A persona designed for a robot with expressive LED eyes behaves differently than one for a voice-only speaker. Actuator declarations let the LLM adapt output to physical capabilities.</p>
 
 <h2>Supported Platforms</h2>
-<p>Soul Spec works with any framework that reads <code>SOUL.md</code>. For robotics, v0.5 adds platform identifiers:</p>
+<p>SoulSpec works with any framework that reads <code>SOUL.md</code>. For robotics, v0.5 adds platform identifiers:</p>
 
 <table>
 <thead><tr><th>Platform</th><th>Identifier</th><th>Use Case</th></tr></thead>
@@ -163,7 +163,7 @@ nav a:hover{color:#fff}
 </table>
 
 <h2>ROS2 Integration</h2>
-<p>We provide an official ROS2 package that loads Soul Spec packages directly into your robot:</p>
+<p>We provide an official ROS2 package that loads SoulSpec packages directly into your robot:</p>
 
 <pre><code># Install
 cd ~/ros2_ws/src
@@ -199,10 +199,10 @@ ANTHROPIC_API_KEY=your-key ./demo.sh</code></pre>
 <p>The same persona definition works across chatbots, mobile apps, and robots. Transfer a customer service personality from a chat widget to a physical kiosk — no rewrite needed.</p>
 
 <h3>Physical Safety as Spec</h3>
-<p>Embodied agents introduce physical risks that virtual agents don't have. Soul Spec makes safety declarations explicit and machine-readable. <a href="https://clawsouls.ai/soulscan">SoulScan</a> validates that embodied souls include required safety fields.</p>
+<p>Embodied agents introduce physical risks that virtual agents don't have. SoulSpec makes safety declarations explicit and machine-readable. <a href="https://clawsouls.ai/soulscan">SoulScan</a> validates that embodied souls include required safety fields.</p>
 
 <h3>Marketplace for Robot Characters</h3>
-<p>Research already proposes robot character marketplaces (Frontiers in Robotics, 2025). Soul Spec + <a href="https://clawsouls.ai">ClawSouls</a> makes this real — browse, download, and deploy verified robot personas.</p>
+<p>Research already proposes robot character marketplaces (Frontiers in Robotics, 2025). SoulSpec + <a href="https://clawsouls.ai">ClawSouls</a> makes this real — browse, download, and deploy verified robot personas.</p>
 
 <h2>Research Foundation</h2>
 <p>This extension is grounded in peer-reviewed research:</p>
@@ -228,7 +228,7 @@ ANTHROPIC_API_KEY=your-key ./demo.sh</code></pre>
 </div>
 
 <h2>Safety Laws</h2>
-<p><span class="badge">v0.5</span> Inspired by <strong>Asimov's Three Laws of Robotics</strong>, Soul Spec v0.5 introduces <code>safety.laws</code> — hierarchical, priority-ordered safety rules for embodied and virtual agents alike.</p>
+<p><span class="badge">v0.5</span> Inspired by <strong>Asimov's Three Laws of Robotics</strong>, SoulSpec v0.5 introduces <code>safety.laws</code> — hierarchical, priority-ordered safety rules for embodied and virtual agents alike.</p>
 
 <p>Laws are natural language declarations with structured metadata. They define <em>what</em> an agent must never do, <em>should</em> do, and <em>may</em> do — in strict priority order.</p>
 
@@ -274,7 +274,7 @@ ANTHROPIC_API_KEY=your-key ./demo.sh</code></pre>
 </table>
 
 <h3>Design Philosophy</h3>
-<p>Laws are <strong>natural language declarations</strong>, not executable code. Runtime enforcement is the responsibility of the deploying framework (ROS2 safety monitors, OpenClaw policy engines, etc.). Soul Spec defines the <em>intent</em>; the platform ensures <em>compliance</em>.</p>
+<p>Laws are <strong>natural language declarations</strong>, not executable code. Runtime enforcement is the responsibility of the deploying framework (ROS2 safety monitors, OpenClaw policy engines, etc.). SoulSpec defines the <em>intent</em>; the platform ensures <em>compliance</em>.</p>
 
 <p>This separation is intentional — it keeps soul definitions portable across frameworks while allowing each platform to enforce laws with its own mechanisms.</p>
 
@@ -323,7 +323,7 @@ Focus on verbal communication only.</code></pre>
 <p>This ensures graceful degradation regardless of which agent loads the soul.</p>
 
 <h2>Get Started</h2>
-<p>Soul Spec v0.5 is open and free. Start defining your robot's personality today.</p>
+<p>SoulSpec v0.5 is open and free. Start defining your robot's personality today.</p>
 
 <a href="https://clawsouls.ai/spec" class="cta">Read the Full Spec</a>
 <a href="https://clawsouls.ai/souls" class="cta cta-secondary">Browse Souls</a>
@@ -331,7 +331,7 @@ Focus on verbal communication only.</code></pre>
 </div>
 
 <footer>
-<p>Soul Spec is an open standard maintained by <a href="https://clawsouls.ai">ClawSouls</a>.</p>
+<p>SoulSpec is an open standard maintained by <a href="https://clawsouls.ai">ClawSouls</a>.</p>
 <p>Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 <p style="margin-top:0.5rem">DOI: <a href="https://doi.org/10.5281/zenodo.18772585">10.5281/zenodo.18772585</a></p>
 </footer>
